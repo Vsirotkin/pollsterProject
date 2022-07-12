@@ -6,7 +6,8 @@
         <div class="card mb-3">
             <div class="card-body">
                 <p class="lead">{{ question.question_text }}</p>
-                <a href="{% url 'polls:detail' question_id %}"></a>
+                    <a class="btn btn-primary" href="{% url 'polls:vote' question.id %}" role="button" >Vote Now</a>
+                    <a class="btn btn-secondary" href="{% url 'polls:results' question.id %}" role="button" >Results</a>
             </div>
         </div>
     {% empty %}
