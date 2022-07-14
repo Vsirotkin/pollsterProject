@@ -16,3 +16,21 @@ class QuestionModelTests(TestCase):
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
         self.assertIs(future_question.was_published_recently(), False)
+
+    def test_was_published_recently_with_older_then_yesterday_question(self):
+        """
+        was_published_recently() returns False for questions whose pub_date
+        is older than 1 day.
+        """
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        older_then_yesterday_question = Question(pub_date=time)
+        self.assertIs(older_then_yesterday_question.was_published_recently(), False)
+
+    def test_was_published_recently_with_yesterday_question(self):
+        """
+        was_published_recently() returns True for questions whose pub_date
+        lays within yesterday.
+        """
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        yesterday_question = Question(pub_date=time)
+        self.assertIs(yesterday_question.was_published_recently(), True)
